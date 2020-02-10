@@ -1,0 +1,32 @@
+{
+  "projectName": "production-ready-webapp-boilerplate",
+  "projectOwner": "haoict",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "haoict",
+      "name": "Nguyen Van Hao",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/7247750?v=4",
+      "profile": "http://haoict.github.io",
+      "contributions": [
+        "doc",
+        "code",
+        "bug",
+        "ideas",
+        "design",
+        "translation",
+        "review",
+        "plugin",
+        "infra"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

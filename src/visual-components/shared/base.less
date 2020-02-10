@@ -1,0 +1,58 @@
+@import './constants.less';
+
+html {
+  background: #efeff5;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  font-family: Verdana, Arial, sans-serif;
+}
+
+@media (min-width: 576px) {
+  main {
+    width: 576px;
+    margin: 0 auto;
+  }
+}
+@media (min-width: 768px) {
+  main {
+    width: 768px;
+    margin: 0 auto;
+  }
+}
+@media (min-width: 992px) {
+  main {
+    width: 992px;
+  }
+}
+@media (min-width: 1200px) {
+  main {
+    width: 1200px;
+  }
+}
+
+// prevent auto zoom when focus on input for mobile
+select,
+textarea,
+input {
+  font-size: 16px;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: @link-color;
+}
+
+a:visited,
+a:hover,
+a:active {
+  color: @link-color;
+}
