@@ -32,7 +32,7 @@ jobs:
     machine: true
     steps:
       - run: ssh admin@nless.pro "docker pull $DOCKER_USER/next-dict:${CIRCLE_BRANCH}; docker kill next-dict || true; docker rm next-dict || true"
-      - run: ssh admin@nless.pro "docker run --name next-dict --restart always -d -p 3007:3007 -v /home/admin/docker/bindmount/next-dict/.env:/usr/src/app/.env $DOCKER_USER/next-dict:${CIRCLE_BRANCH}"
+      - run: ssh admin@nless.pro "docker run --name next-dict --restart always -d -p 3007:3007 -v /home/admin/docker/bindmount/next-dict/.env:/usr/src/app/.env -v /home/admin/docker/bindmount/next-dict/db:/usr/src/app/src/server/static/data $DOCKER_USER/next-dict:${CIRCLE_BRANCH}"
 
   cleanup:
     machine: true

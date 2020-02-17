@@ -12,7 +12,7 @@ class Index extends React.Component {
           <title>{title}</title>
         </Head>
         <div style={{ width: '70%', maxWidth: 350, margin: '0 auto 50px', textAlign: 'center' }}>
-          <img src='/static/assets/images/logo.png' alt='logo' style={{ width: '100%' }} />
+          <img src='/static/assets/images/logo.png' alt='logo' style={{ width: 'auto', maxHeight: 150 }} />
         </div>
         <SearchAreaContainer />
         <br />

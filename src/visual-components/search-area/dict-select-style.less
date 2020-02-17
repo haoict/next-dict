@@ -1,0 +1,49 @@
+@import '../shared/constants.less';
+
+.dict-select-component {
+  position: absolute;
+  top: 100%;
+  text-align: center;
+  width: 100%;
+
+  .radio-group {
+    border: solid 2px @primary-color;
+    display: inline-flex;
+    margin: 10px auto;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  label {
+    color: @primary-color;
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-right: 1px solid @primary-color;
+  }
+
+  .dict-radio {
+    &:last-child {
+      label {
+        border-right: 0;
+      }
+    }
+
+    &.disabled {
+      label {
+        color: gray;
+      }
+    }
+  }
+
+  input[type='radio'] {
+    position: absolute;
+    visibility: hidden;
+    display: none;
+  }
+
+  input[type='radio']:checked + label {
+    color: white;
+    background: @primary-color;
+  }
+}

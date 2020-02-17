@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import Router from 'next/router';
 import Suggestion from './suggestion';
 import './style.less';
+import DictSelect from './dict-select';
 
 class SearchArea extends Component {
   state = {
-    searchText: ''
+    searchText: this.props.initSearchText || '',
+    dictType: 'envi'
   };
+
+  componentDidMount() {
+    const dictType = localStorage.getItem('next-dict-dict-type') || 'envi';
+    this.setState({ dictType });
+  }
 
   componentWillUnmount() {
     clearTimeout(this.delayTimer);
@@ -14,6 +21,7 @@ class SearchArea extends Component {
   }
 
   onSearchTextChange = e => {
+    const { dictType } = this.state;
     const { searchKeyword } = this.props;
     const searchText = e.target.value;
     this.setState({ searchText });
@@ -26,17 +34,27 @@ class SearchArea extends Component {
 
     this.delayTimer = setTimeout(() => {
       this.delayTimer = null;
-      searchKeyword(searchText);
+      searchKeyword(searchText, dictType);
     }, 500);
   };
 
   onSubmit = e => {
-    const { searchText } = this.state;
+    const { searchText, dictType } = this.state;
+    const { data } = this.props;
     e.preventDefault();
+    clearTimeout(this.delayTimer);
     if (!searchText) {
       return;
     }
-    Router.push(`/word?id=${searchText}`, `/word/${searchText}`).then(() => window.scrollTo(0, 0));
+    this.props.searchKeyword('');
+
+    let word = searchText;
+    if (data && data.length) {
+      word = data[0];
+    }
+    Router.push(`/word?id=${word}&type=${dictType}`, `/word/${word}?type=${dictType}`).then(() =>
+      window.scrollTo(0, 0)
+    );
   };
 
   onSearchTextClear = () => {
@@ -45,13 +63,24 @@ class SearchArea extends Component {
     searchKeyword('');
   };
 
+  onSuggestItemClick = suggestionItem => {
+    const { dictType } = this.state;
+    const { onSuggestItemClick } = this.props;
+    this.setState({ searchText: suggestionItem });
+    onSuggestItemClick(suggestionItem, dictType);
+  };
+
+  onDictTypeChange = dictType => {
+    this.setState({ dictType });
+  };
+
   render() {
-    const { isLoading, data, onSuggestItemClick } = this.props;
-    const { searchText } = this.state;
+    const { data } = this.props;
+    const { searchText, dictType } = this.state;
 
     return (
       <div className='search-area-component'>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
           <div className='input-field'>
             <input
               type='text'
@@ -59,6 +88,7 @@ class SearchArea extends Component {
               value={searchText}
               onChange={this.onSearchTextChange}
               onFocus={this.onSearchTextChange}
+              onClick={e => e.target.select()}
             />
             {searchText && (
               <span className='clear-btn' onClick={this.onSearchTextClear}>
@@ -73,10 +103,8 @@ class SearchArea extends Component {
               <path d='m378.344 332.78c25.37-34.645 40.545-77.2 40.545-123.333 0-115.484-93.961-209.445-209.445-209.445s-209.444 93.961-209.444 209.445 93.961 209.445 209.445 209.445c46.133 0 88.692-15.177 123.337-40.547l137.212 137.212 45.564-45.564c0-.001-137.214-137.213-137.214-137.213zm-168.899 21.667c-79.958 0-145-65.042-145-145s65.042-145 145-145 145 65.042 145 145-65.043 145-145 145z' />
             </svg>
           </button>
-          {!this.delayTimer && !isLoading && searchText && (!data || !data.length) && (
-            <div className='indicate-text'>No result</div>
-          )}
-          <Suggestion data={data} onSuggestItemClick={onSuggestItemClick} />
+          <DictSelect defaultDictType={dictType} onDictTypeChange={this.onDictTypeChange} />
+          <Suggestion data={data} onSuggestItemClick={this.onSuggestItemClick} />
         </form>
       </div>
     );
