@@ -4,17 +4,17 @@ const initState = {
   error: null
 };
 
-const searchArea = (state = initState, action) => {
+const wordData = (state = initState, action) => {
   switch (action.type) {
-    case 'SEARCH_KEYWORD_LOADING':
+    case 'GET_WORD_DATA_LOADING':
       return { isLoading: true };
-    case 'SEARCH_KEYWORD_SUCCESS':
+    case 'GET_WORD_DATA_SUCCESS':
       return { isLoading: false, data: action.data };
-    case 'SEARCH_KEYWORD_ERROR':
+    case 'GET_WORD_DATA_ERROR':
       return { isLoading: false, error: action.error };
     default:
       return state;
   }
 };
 
-export { searchArea };
+export { wordData };

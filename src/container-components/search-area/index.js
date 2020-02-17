@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SearchArea from '../../visual-components/search-area';
-import { searchPokemonName } from '../../store/actions/search-area';
+import { searchKeyword } from '../../store/actions/search-area';
 import Router from 'next/router';
 
 class SearchAreaContainer extends Component {
   onSuggestItemClick = id => {
-    this.props.searchPokemonName('');
-    Router.push(`/pokemons?id=${id}`, `/pokemons/${id}`).then(() => window.scrollTo(0, 0));
+    this.props.searchKeyword('');
+    Router.push(`/word?id=${id}`, `/word/${id}`).then(() => window.scrollTo(0, 0));
   };
 
   render() {
-    const { searchPokemonName, isLoading, data, error } = this.props;
+    const { searchKeyword, isLoading, data, error } = this.props;
     return (
       <SearchArea
-        searchPokemonName={searchPokemonName}
+        searchKeyword={searchKeyword}
         isLoading={isLoading}
         data={data}
         error={error}
@@ -31,8 +31,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  searchPokemonName: (name, isfullsearch) => {
-    dispatch(searchPokemonName(name, isfullsearch));
+  searchKeyword: (name, isfullsearch) => {
+    dispatch(searchKeyword(name, isfullsearch));
   }
 });
 

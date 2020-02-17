@@ -1,9 +1,9 @@
 import { fetchApi } from './utils';
 
-function searchPokemonName(name, isfullsearch = false) {
-  return fetchApi('pokemon/search', null, { name, isfullsearch });
+function searchKeyword(key, type) {
+  return fetchApi('dict/search', null, { key, type });
 }
 
 export const searchService = {
-  searchPokemonName
+  searchKeyword
 };

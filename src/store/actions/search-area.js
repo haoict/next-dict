@@ -1,24 +1,23 @@
 import { searchService } from '../../services/search-service';
 
-function searchPokemonName(name, isfullsearch = false) {
+function searchKeyword(name, type) {
   return async (dispatch, getState) => {
     try {
       if (!name) {
-        dispatch({ type: 'SEARCH_POKEMON_NAME_SUCCESS', data: [] });
+        dispatch({ type: 'SEARCH_KEYWORD_SUCCESS', data: [] });
         return;
       }
-      dispatch({ type: 'SEARCH_POKEMON_NAME_LOADING' });
-      const response = await searchService.searchPokemonName(name, isfullsearch);
+      dispatch({ type: 'SEARCH_KEYWORD_LOADING' });
+      const response = await searchService.searchKeyword(name, type);
       if (response.result) {
-        dispatch({ type: 'SEARCH_POKEMON_NAME_SUCCESS', data: response.data });
+        dispatch({ type: 'SEARCH_KEYWORD_SUCCESS', data: response.data });
         return;
       }
-      dispatch({ type: 'SEARCH_POKEMON_NAME_ERROR', error: response });
+      dispatch({ type: 'SEARCH_KEYWORD_ERROR', error: response });
     } catch (error) {
-      dispatch({ type: 'SEARCH_POKEMON_NAME_ERROR', error: error });
+      dispatch({ type: 'SEARCH_KEYWORD_ERROR', error: error });
     }
   };
 }
 
-
-export { searchPokemonName };
+export { searchKeyword };

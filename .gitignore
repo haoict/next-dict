@@ -11,3 +11,6 @@ logs
 # testing
 */**/actual
 */**/diff
+
+**/En_Vi.*
+**/Vi_En.*

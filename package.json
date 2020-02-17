@@ -40,6 +40,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
+    "sqlite3": "^4.1.1",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.4.0"
   },

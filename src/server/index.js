@@ -12,10 +12,9 @@ const envConfig = require('../config/env-config');
 const { logger } = require('../helpers/logger');
 const cookieParser = require('cookie-parser');
 
-const api_pokemon = require('./api/pokemon');
+const api_dict = require('./api/dict');
 
-const route_pokemons = require('./routes/pokemons');
-const route_search = require('./routes/search');
+const route_word = require('./routes/word');
 
 /**
  * Necessary headers & middlewares
@@ -40,13 +39,12 @@ server.use(
 /** DEFINE API
  * serve APIs
  */
-server.use('/api/pokemon', api_pokemon);
+server.use('/api/dict', api_dict);
 
 /** DEFINE ROUTES
  * serve web server routes
  */
-server.use('/pokemons', route_pokemons);
-server.use('/search', route_search);
+server.use('/word', route_word);
 
 // handle 404
 server.get('*', (req, res) => {

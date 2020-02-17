@@ -14,19 +14,19 @@ class SearchArea extends Component {
   }
 
   onSearchTextChange = e => {
-    const { searchPokemonName } = this.props;
+    const { searchKeyword } = this.props;
     const searchText = e.target.value;
     this.setState({ searchText });
     clearTimeout(this.delayTimer);
 
     if (!searchText) {
-      searchPokemonName('');
+      searchKeyword('');
       return;
     }
 
     this.delayTimer = setTimeout(() => {
       this.delayTimer = null;
-      searchPokemonName(searchText);
+      searchKeyword(searchText);
     }, 500);
   };
 
@@ -36,13 +36,13 @@ class SearchArea extends Component {
     if (!searchText) {
       return;
     }
-    Router.push(`/search?keyword=${searchText}`, `/search/${searchText}`).then(() => window.scrollTo(0, 0));
+    Router.push(`/word?id=${searchText}`, `/word/${searchText}`).then(() => window.scrollTo(0, 0));
   };
 
   onSearchTextClear = () => {
-    const { searchPokemonName } = this.props;
+    const { searchKeyword } = this.props;
     this.setState({ searchText: '' });
-    searchPokemonName('');
+    searchKeyword('');
   };
 
   render() {

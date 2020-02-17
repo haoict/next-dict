@@ -25,30 +25,14 @@ jobs:
       - setup_remote_docker
       - checkout
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker build . -t $DOCKER_USER/production-ready-webapp-boilerplate:${CIRCLE_BRANCH}
-      - run: docker push $DOCKER_USER/production-ready-webapp-boilerplate:${CIRCLE_BRANCH}
+      - run: docker build . -t $DOCKER_USER/next-dict:${CIRCLE_BRANCH}
+      - run: docker push $DOCKER_USER/next-dict:${CIRCLE_BRANCH}
 
   deploy:
     machine: true
     steps:
-      - run: ssh admin@nless.pro "docker pull $DOCKER_USER/production-ready-webapp-boilerplate:${CIRCLE_BRANCH}; docker kill pokemon || true; docker rm pokemon || true"
-      - run: ssh admin@nless.pro "docker run --name pokemon --restart always -d -p 3005:3005 -v /home/admin/docker/bindmount/pokemon/.env:/usr/src/app/.env $DOCKER_USER/production-ready-webapp-boilerplate:${CIRCLE_BRANCH}"
-
-  build-storybook:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - setup_remote_docker
-      - checkout
-      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker build . -f Dockerfile-storybook -t $DOCKER_USER/production-ready-webapp-boilerplate-storybook:${CIRCLE_BRANCH}
-      - run: docker push $DOCKER_USER/production-ready-webapp-boilerplate-storybook:${CIRCLE_BRANCH}
-
-  deploy-storybook:
-    machine: true
-    steps:
-      - run: ssh admin@nless.pro "docker pull $DOCKER_USER/production-ready-webapp-boilerplate-storybook:${CIRCLE_BRANCH}; docker kill pokemon-storybook || true; docker rm pokemon-storybook || true"
-      - run: ssh admin@nless.pro "docker run --name pokemon-storybook --restart always -d -p 3006:9090 $DOCKER_USER/production-ready-webapp-boilerplate-storybook:${CIRCLE_BRANCH}"
+      - run: ssh admin@nless.pro "docker pull $DOCKER_USER/next-dict:${CIRCLE_BRANCH}; docker kill next-dict || true; docker rm next-dict || true"
+      - run: ssh admin@nless.pro "docker run --name next-dict --restart always -d -p 3007:3007 -v /home/admin/docker/bindmount/next-dict/.env:/usr/src/app/.env $DOCKER_USER/next-dict:${CIRCLE_BRANCH}"
 
   cleanup:
     machine: true
@@ -75,21 +59,6 @@ workflows:
             branches:
               only:
                 - master
-      - build-storybook:
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - master
-      - deploy-storybook:
-          requires:
-            - build-storybook
-          filters:
-            branches:
-              only:
-                - master
       - cleanup:
           requires:
             - deploy
-            - deploy-storybook
