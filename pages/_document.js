@@ -11,7 +11,7 @@ class MyDocument extends Document {
           {/* Must */}
           <meta charSet='utf-8' />
           <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no' />
-          <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+          <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
           <link rel='icon' type='image/x-icon' href='/static/assets/images/favicon.ico' />
           <meta name='description' content='Next generation of Dictionaries!!' />
           <meta name='keywords' content='dictionary' />

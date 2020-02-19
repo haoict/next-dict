@@ -101,7 +101,7 @@ router.get('/:key', (req, res) => {
 
   const key = req.params.key.trim();
 
-  const sql = `SELECT * FROM Dict WHERE Word=?`;
+  const sql = `SELECT * FROM Dict WHERE Word=? COLLATE NOCASE`;
 
   const trans = [];
   try {
