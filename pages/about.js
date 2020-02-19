@@ -10,7 +10,7 @@ const About = props => {
 
       <div style={{ margin: '0 8px' }}>
         <h3>About</h3>
-        <p>Production Ready Web App Boilerplate</p>
+        <p>Next Dict!!</p>
         <h3>Copyright Notice</h3>
         <p>Please note all data is collected by automated tool.</p>
         <h3>Assets source</h3>

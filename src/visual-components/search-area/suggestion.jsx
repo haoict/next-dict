@@ -3,7 +3,7 @@ import './suggestion-style.less';
 
 class Suggestion extends Component {
   render() {
-    const { data, onSuggestItemClick } = this.props;
+    const { data, onSuggestItemClick, isShow } = this.props;
 
     if (!data || !data.length) return null;
 
@@ -22,7 +22,11 @@ class Suggestion extends Component {
 
     if (!items || !items.length) return null;
 
-    return <div className='suggestion-component'>{items}</div>;
+    return (
+      <div className='suggestion-component' style={isShow ? {} : { display: 'none' }}>
+        {items}
+      </div>
+    );
   }
 }
 

@@ -7,7 +7,8 @@ import DictSelect from './dict-select';
 class SearchArea extends Component {
   state = {
     searchText: this.props.initSearchText || '',
-    dictType: 'envi'
+    dictType: 'envi',
+    isSearchInputFocus: false
   };
 
   componentDidMount() {
@@ -17,7 +18,9 @@ class SearchArea extends Component {
 
   componentWillUnmount() {
     clearTimeout(this.delayTimer);
+    clearTimeout(this.onSearchInputBlurTimeout);
     this.delayTimer = null;
+    this.onSearchInputBlurTimeout = null;
   }
 
   onSearchTextChange = e => {
@@ -27,29 +30,32 @@ class SearchArea extends Component {
     this.setState({ searchText });
     clearTimeout(this.delayTimer);
 
-    if (!searchText) {
+    const word = searchText.trim().toLowerCase();
+    if (!word) {
       searchKeyword('');
       return;
     }
 
     this.delayTimer = setTimeout(() => {
       this.delayTimer = null;
-      searchKeyword(searchText, dictType);
+      searchKeyword(word, dictType);
     }, 500);
   };
 
   onSubmit = e => {
     const { searchText, dictType } = this.state;
-    const { data } = this.props;
+    const { data, searchKeyword } = this.props;
     e.preventDefault();
     clearTimeout(this.delayTimer);
-    if (!searchText) {
+
+    let word = searchText.trim().toLowerCase();
+
+    if (!word) {
       return;
     }
-    this.props.searchKeyword('');
+    searchKeyword('');
 
-    let word = searchText;
-    if (data && data.length) {
+    if (data && data.length && data[0].toLowerCase().includes(word)) {
       word = data[0];
     }
     Router.push(`/word?id=${word}&type=${dictType}`, `/word/${word}?type=${dictType}`).then(() =>
@@ -74,13 +80,24 @@ class SearchArea extends Component {
     this.setState({ dictType });
   };
 
+  onSearchInputFocus = e => {
+    this.setState({ isSearchInputFocus: true });
+    this.onSearchTextChange(e);
+  };
+
+  onSearchInputBlur = () => {
+    this.onSearchInputBlurTimeout = setTimeout(() => {
+      this.setState({ isSearchInputFocus: false });
+    }, 100);
+  };
+
   render() {
     const { data } = this.props;
-    const { searchText, dictType } = this.state;
+    const { searchText, dictType, isSearchInputFocus } = this.state;
 
     return (
       <div className='search-area-component'>
-        <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
+        <form onSubmit={this.onSubmit}>
           <div className='input-field'>
             <input
               id='searchInput'
@@ -89,7 +106,8 @@ class SearchArea extends Component {
               aria-label='Search input box'
               value={searchText}
               onChange={this.onSearchTextChange}
-              onFocus={this.onSearchTextChange}
+              onFocus={this.onSearchInputFocus}
+              onBlur={this.onSearchInputBlur}
               onClick={e => e.target.select()}
             />
             {searchText && (
@@ -107,7 +125,8 @@ class SearchArea extends Component {
           </button>
 
           <DictSelect defaultDictType={dictType} onDictTypeChange={this.onDictTypeChange} />
-          <Suggestion data={data} onSuggestItemClick={this.onSuggestItemClick} />
+
+          <Suggestion data={data} onSuggestItemClick={this.onSuggestItemClick} isShow={isSearchInputFocus} />
         </form>
       </div>
     );
