@@ -2,12 +2,12 @@
 
 .search-area-component {
   form {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     width: 60%;
     min-width: 300px;
     margin: auto;
-    position: relative;
 
     .input-field {
       position: relative;
@@ -76,6 +76,10 @@
         margin-top: 5px;
         width: 20px;
         fill: white;
+      }
+
+      .accessible-name {
+        display: none;
       }
     }
     &::after {
