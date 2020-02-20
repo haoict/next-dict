@@ -14,3 +14,7 @@ logs
 
 **/En_Vi.*
 **/Vi_En.*
+
+# pwd build output files
+**/public/sw.js*
+**/public/workbox-*.js*

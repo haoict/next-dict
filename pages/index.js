@@ -1,8 +1,13 @@
 import React from 'react';
 import Head from 'next/head';
 import SearchAreaContainer from '../src/container-components/search-area';
+import { serviceWorkerRegister } from '../src/helpers/service-worker-register';
 
 class Index extends React.Component {
+  componentDidMount() {
+    serviceWorkerRegister();
+  }
+
   render() {
     const title = 'Next Dictionary!!';
 
