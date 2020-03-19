@@ -88,7 +88,7 @@ class SearchArea extends Component {
   onSearchInputBlur = () => {
     this.onSearchInputBlurTimeout = setTimeout(() => {
       this.setState({ isSearchInputFocus: false });
-    }, 100);
+    }, 200);
   };
 
   render() {
