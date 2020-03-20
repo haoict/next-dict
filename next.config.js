@@ -1,12 +1,9 @@
 const withLess = require('@zeit/next-less');
 const withPWA = require('next-pwa');
 
-const dev = process.env.NODE_ENV !== 'production';
-
 module.exports = withLess(
   withPWA({
     pwa: {
-      disable: dev,
       register: false,
       skipWaiting: false,
       dest: 'public'
